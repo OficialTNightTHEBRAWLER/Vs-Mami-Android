@@ -1331,9 +1331,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (!loadRep)
-			rep = new Replay("na");
-
 		super.create();
 	}
 
@@ -3419,11 +3416,13 @@ class PlayState extends MusicBeatState
 
 					FlxG.switchState(new StoryMenuState());
 
+          #if windows
 					if (lua != null)
 					{
 						Lua.close(lua);
 						lua = null;
 					}
+          #end
 
 					// if ()
 					StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
