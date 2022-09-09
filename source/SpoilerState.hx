@@ -47,6 +47,10 @@ class SpoilerState extends MusicBeatState
 		txt.borderSize = 3;
 		txt.borderStyle = FlxTextBorderStyle.OUTLINE;
 		add(txt);
+		
+    #if android
+  	addVirtualPad(NONE, A_B);
+    #end
 	}
 
 	override function update(elapsed:Float)

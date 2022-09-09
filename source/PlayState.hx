@@ -500,14 +500,14 @@ class PlayState extends MusicBeatState
 		bfnoteMovementXoffset = 0;
 		bfnoteMovementYoffset = 0;
 
-		#if sys
+	/*	#if windows
 		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.song.toLowerCase()  + "/modchart"));
 		#end
 		#if !cpp
 		executeModchart = false; // FORCE disable for non cpp targets
 		#end
 
-		trace('Mod chart: ' + executeModchart + " - " + Paths.lua(PlayState.SONG.song.toLowerCase() + "/modchart"));
+		trace('Mod chart: ' + executeModchart + " - " + Paths.lua(PlayState.SONG.song.toLowerCase() + "/modchart")); */
 
 		#if windows
 		// Making difficulty text for Discord Rich Presence.
@@ -1245,6 +1245,10 @@ class PlayState extends MusicBeatState
 		healthDrainIndicator.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camOVERLAY];
+		#if android
+		addAndroidControls();
+		androidControls.visible = true;
+		#end
 		if (FlxG.save.data.songPosition)
 		{
 			songPosBG.cameras = [camHUD];
@@ -2523,7 +2527,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.text = "Suggested Offset: " + offsetTest;
 
 		}
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (FlxG.keys.justPressed.ENTER #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -3374,9 +3378,6 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-		if (!loadRep)
-			rep.SaveReplay();
-
 		if (executeModchart)
 		{
 			Lua.close(lua);
@@ -3469,14 +3470,6 @@ class PlayState extends MusicBeatState
 
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
-					switch(SONG.song.toLowerCase())
-					{
-						case 'salvation':
-							LoadingState.loadAndSwitchState(new VideoState("assets/videos/Salvation_Finale.webm", new PlayState()));
-						default:
-							LoadingState.loadAndSwitchState(new PlayState());
-					}
-
 					if (SONG.song.toLowerCase() == 'salvation')
 						{
 							FlxG.save.data.progressStoryClear = true;

@@ -269,6 +269,10 @@ class MainMenuState extends MusicBeatState
 				canMove = true;
 			});
 
+    #if android
+  	addVirtualPad(UP_DOWN, A_B);
+    #end
+
 		super.create();
 	}
 

@@ -281,6 +281,18 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
+#if android
+var justTouched:Bool = false;
+
+for (touch in FlxG.touches.list)
+{
+        if (touch.justPressed)
+        {
+               justTouched = true;
+        }
+}
+#end
+
 		dialogueOpened = true;
 
 		if (FlxG.keys.justPressed.ESCAPE && dialogueStarted == true && dialogueSkipped == false)
@@ -325,7 +337,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 				
 
-		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true && isEnding == false)
+		if (FlxG.keys.justPressed.ENTER #if android || justTouched #end && dialogueStarted == true && isEnding == false)
 		{
 			remove(dialogue);
 				
