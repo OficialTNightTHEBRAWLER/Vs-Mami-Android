@@ -1331,6 +1331,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+    if (!loadRep)
+			rep = new Replay("na");
+
 		super.create();
 	}
 
